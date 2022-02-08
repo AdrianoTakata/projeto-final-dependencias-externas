@@ -3,12 +3,22 @@
  */
 package br.com.ProjetoFinalDependenciasExternas;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static br.com.ProjetoFinalDependenciasExternas.OperacaoArquivo.*;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+
+        OrganizacaoBancaria organizacaoBancaria = new OrganizacaoBancaria();
+        organizacaoBancaria.gerarExtrato();
+
     }
+
+
+
 }
