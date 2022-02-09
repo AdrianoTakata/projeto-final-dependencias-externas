@@ -12,20 +12,34 @@ public class OrganizacaoBancaria {
 
     List<String[]> dados = lerArquivo("dados-contas.csv");
     Collection<OperacaoBancaria> dadosConta = new HashSet<>();
+    List<OperacaoBancaria> dadosContaOrganizado = new ArrayList<>();
     Collection<String> idContaLista = new HashSet<>();
 
     public void gerarExtrato() {
 
         gerarListaDados();
         obterIdConta();
+        organizarListaConta();
+
+        for (String idConta : idContaLista){
+            List<OperacaoBancaria> dadosPorConta = dadosContaOrganizado.stream()
+                    .filter(operacao -> operacao.getConta().getIdConta().equals(idConta))
+                    .collect(Collectors.toList());
+            Collections.sort(dadosPorConta, Comparator.comparing(operacao -> operacao.getDataHoraOperacao()));
+            escreverExtratos(dadosPorConta);
+        }
+    }
+
+    public void organizarListaConta() {
 
         for (String idConta : idContaLista){
             List<OperacaoBancaria> dadosPorConta = dadosConta.stream()
                     .filter(operacao -> operacao.getConta().getIdConta().equals(idConta))
                     .collect(Collectors.toList());
             Collections.sort(dadosPorConta, Comparator.comparing(operacao -> operacao.getDataHoraOperacao()));
-            escreverExtratos(dadosPorConta);
+            dadosContaOrganizado.addAll(dadosPorConta);
         }
+
     }
 
     public void gerarListaDados(){
@@ -40,5 +54,6 @@ public class OrganizacaoBancaria {
             this.idContaLista.add(operacao.getConta().getIdConta());
         }
     }
+
 
 }
