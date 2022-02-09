@@ -11,7 +11,7 @@ import static br.com.ProjetoFinalDependenciasExternas.OperacaoArquivo.lerArquivo
 public class OrganizacaoBancaria {
 
     List<String[]> dados = lerArquivo("dados-contas.csv");
-    List<OperacaoBancaria> dadosConta = new ArrayList<>();
+    Collection<OperacaoBancaria> dadosConta = new HashSet<>();
     Collection<String> idContaLista = new HashSet<>();
 
     public void gerarExtrato() {
